@@ -1,0 +1,73 @@
+spring:
+  cloud:
+    #gateway:
+    #  routes:
+    #    - id : r1
+    #      uri: http://localhost:8081
+    #      predicates:
+    #        - Path=/api/v1/users/**
+    #    - id : r2
+    #      uri: http://localhost:8082
+    #      predicates:
+    #        - Path=/api/v1/hotels/**
+    #        - Path=/api/v1/rooms/**
+    #        - Path=/api/v1/commentaires/**
+    #    - id : r3
+    #      uri: http://localhost:8083
+    #      predicates:
+    #        - Path=/api/v1/reservations/**
+    discovery:
+      enabled: true
+    config:
+      enabled: true
+    security:
+      oauth2:
+        resourceserver:
+          jwt:
+            jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+            issuer-uri: http://localhost:8080/realms/booking-realm
+
+  eureka:
+    instance:
+      prefer-ip-address: true
+    client:
+      service-url:
+        defaultZone: http://locahost:8761/eureka
+
+  jwt:
+    auth:
+      converter:
+        resource-id: booking-client
+        principle-attribute: preferred_username
+
+
+
+
+
+  #
+  #   security:
+  #    oauth2:
+  #      client:
+  #        registration:
+  #          #google:
+  #          #  client-id: 368341827529-u36o574t05tbkjde8e21kbovhbfrd4qn.apps.googleusercontent.com
+  #          #  client-secret: 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
+  #          #  scope:
+  #          #    - openid
+  #          #    - profile
+  #          #    - email
+  #          keycloak:
+  #            client-id: booking-client
+  #            authorization-grant-type: authorization_code
+  #            scope:
+  #              - openid
+  #        provider:
+  #          keycloak:
+  #            issuer-uri: http://localhost:8080/realms/booking-realm
+  #            user-name-attribute: preferred_username
+  #
+  #      resourceserver:
+  #        jwt:
+  #          issuer-uri: http://localhost:8080/realms/booking-realm
+  #          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+  #
